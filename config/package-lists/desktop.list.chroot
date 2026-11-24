@@ -19,6 +19,7 @@ xdg-user-dirs
 
 # --- Navegador (base Chromium) ---
 chromium
+chromium-sandbox
 chromium-l10n
 
 # --- Apps essenciais ---
