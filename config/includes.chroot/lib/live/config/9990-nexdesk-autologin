@@ -1,0 +1,16 @@
+#!/bin/sh
+# Roda só no boot live (live-config): login automático no SDDM.
+# Fica fora do sistema instalado, que usa a tela de login normal.
+set -e
+
+[ -e /var/lib/live/config/nexdesk-autologin ] && exit 0
+
+mkdir -p /etc/sddm.conf.d
+cat > /etc/sddm.conf.d/10-nexdesk-live-autologin.conf <<EOF
+[Autologin]
+User=nexdesk
+Session=plasmax11.desktop
+EOF
+
+mkdir -p /var/lib/live/config
+touch /var/lib/live/config/nexdesk-autologin

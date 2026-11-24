@@ -1,0 +1,27 @@
+#!/bin/sh
+# Configuração do live-build. Para renomear o sistema, mude NAME abaixo.
+set -e
+
+NAME="${NAME:-NexDesk}"
+SLUG="$(echo "$NAME" | tr '[:upper:] ' '[:lower:]-')"
+RECOMMENDS="${APT_RECOMMENDS:-true}"   # false = ISO menor, porém pode faltar algum pacote opcional
+
+lb config noauto \
+	--mode debian \
+	--distribution trixie \
+	--architectures amd64 \
+	--linux-flavours amd64 \
+	--archive-areas "main contrib non-free non-free-firmware" \
+	--updates true \
+	--security true \
+	--apt-recommends "$RECOMMENDS" \
+	--debian-installer none \
+	--binary-images iso-hybrid \
+	--bootloaders "syslinux,grub-efi" \
+	--memtest none \
+	--iso-application "$NAME" \
+	--iso-publisher "$NAME Project" \
+	--iso-volume "$NAME" \
+	--image-name "$SLUG" \
+	--bootappend-live "boot=live components quiet splash username=nexdesk hostname=$SLUG locales=pt_BR.UTF-8 keyboard-layouts=br timezone=America/Sao_Paulo" \
+	"${@}"

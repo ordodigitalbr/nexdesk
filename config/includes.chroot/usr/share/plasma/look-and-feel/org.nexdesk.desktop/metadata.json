@@ -1,0 +1,15 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "NexDesk"
+            }
+        ],
+        "Description": "Desktop em janelas com barra de tarefas inferior, inspirado em modos desktop de tablets/celulares",
+        "Id": "org.nexdesk.desktop",
+        "License": "GPL-2.0+",
+        "Name": "NexDesk",
+        "Version": "0.1"
+    }
+}

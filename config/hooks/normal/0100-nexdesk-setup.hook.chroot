@@ -1,0 +1,16 @@
+#!/bin/sh
+# Executado dentro do chroot durante o build.
+set -e
+
+# Gerenciador de login e rede habilitados
+echo /usr/bin/sddm > /etc/X11/default-display-manager || true
+systemctl enable sddm.service || true
+systemctl enable NetworkManager.service || true
+
+# Chromium como navegador padrão do sistema
+update-alternatives --set x-www-browser /usr/bin/chromium || true
+update-alternatives --set gnome-www-browser /usr/bin/chromium || true
+
+# Locale pt_BR disponível
+sed -i 's/^# *pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen || true
+locale-gen || true

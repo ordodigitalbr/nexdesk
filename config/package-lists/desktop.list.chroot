@@ -1,0 +1,66 @@
+# --- Plasma (enxuto, sem o task-kde-desktop completo) ---
+kde-plasma-desktop
+plasma-workspace
+kwin-x11
+sddm
+sddm-theme-breeze
+plasma-nm
+plasma-pa
+plasma-systemmonitor
+powerdevil
+bluedevil
+kscreen
+kde-config-sddm
+breeze
+breeze-gtk-theme
+breeze-icon-theme
+xdg-desktop-portal-kde
+xdg-user-dirs
+
+# --- Navegador (base Chromium) ---
+chromium
+chromium-l10n
+
+# --- Apps essenciais ---
+dolphin
+konsole
+kate
+ark
+gwenview
+okular
+spectacle
+kcalc
+
+# --- Rede, áudio, Bluetooth ---
+network-manager
+pipewire-audio
+wireplumber
+bluez
+
+# --- Fontes ---
+fonts-inter
+fonts-noto-core
+fonts-noto-color-emoji
+
+# --- Utilitários ---
+sudo
+locales
+console-setup
+keyboard-configuration
+xdg-utils
+curl
+git
+htop
+unzip
+
+# --- Firmware e microcode (non-free-firmware) ---
+firmware-linux
+firmware-iwlwifi
+firmware-realtek
+firmware-misc-nonfree
+amd64-microcode
+intel-microcode
+
+# --- Instalador gráfico (Calamares) ---
+calamares
+calamares-settings-debian
