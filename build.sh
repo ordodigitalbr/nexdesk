@@ -16,7 +16,8 @@ python3 tools/make-wallpaper.py
 
 chmod +x auto/config auto/build auto/clean \
 	config/hooks/normal/*.hook.chroot \
-	config/includes.chroot/lib/live/config/*
+	config/includes.chroot/lib/live/config/* \
+	config/includes.chroot/usr/local/bin/*
 
 lb clean --purge 2>/dev/null || true
 lb config

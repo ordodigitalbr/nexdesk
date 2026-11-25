@@ -7,9 +7,26 @@ echo /usr/bin/sddm > /etc/X11/default-display-manager || true
 systemctl enable sddm.service || true
 systemctl enable NetworkManager.service || true
 
-# Chromium como navegador padrão do sistema
-update-alternatives --set x-www-browser /usr/bin/chromium || true
-update-alternatives --set gnome-www-browser /usr/bin/chromium || true
+# Google Chrome: baixado do site oficial do Google durante o build
+# (não existe nos repositórios do Debian). O pacote .deb já cadastra o
+# repositório do Google, então o Chrome recebe atualizações normalmente.
+wget --tries=3 --timeout=60 -O /tmp/google-chrome.deb \
+	https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+apt-get install -y /tmp/google-chrome.deb
+rm -f /tmp/google-chrome.deb
+
+# Chrome como navegador padrão do sistema
+update-alternatives --set x-www-browser /usr/bin/google-chrome-stable || true
+update-alternatives --set gnome-www-browser /usr/bin/google-chrome-stable || true
+
+# Serviço do Waydroid (Android)
+systemctl enable waydroid-container.service || true
+
+# Instalador do Calamares com o nome do sistema
+if [ -f /usr/share/applications/install-debian.desktop ]; then
+	sed -i -e 's/^Name=.*/Name=Instalar NexDesk/' -e '/^Name\[/d' \
+		/usr/share/applications/install-debian.desktop || true
+fi
 
 # Locale pt_BR disponível
 sed -i 's/^# *pt_BR.UTF-8 UTF-8/pt_BR.UTF-8 UTF-8/' /etc/locale.gen || true

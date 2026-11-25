@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Configurar Android (Play Store)
+Comment=Instala e configura o Android com Play Store (Waydroid)
+Exec=nexdesk-android-setup
+Icon=android
+Terminal=true
+Categories=System;Settings;

@@ -1,0 +1,44 @@
+#!/bin/bash
+# Configura o Android (Waydroid) com Play Store. Roda em um terminal.
+# A imagem com os serviços do Google é baixada na hora (~1 GB): a licença
+# do Google não permite incluí-la dentro da ISO.
+
+echo "=== Configuração do Android (Play Store) ==="
+echo
+
+if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
+	echo "ATENÇÃO: você está em uma sessão '$XDG_SESSION_TYPE'."
+	echo "O Android precisa da sessão Wayland, e ela não roda bem dentro de VMs."
+	echo "Em um computador de verdade, faça login em 'Plasma (Wayland)'."
+	echo
+	read -r -p "Continuar mesmo assim? [s/N] " r
+	case "$r" in s|S) ;; *) exit 1 ;; esac
+fi
+
+if ! ping -c1 -W3 ota.waydro.id >/dev/null 2>&1; then
+	echo "Sem acesso à internet (ota.waydro.id). Conecte-se e tente de novo."
+	exit 1
+fi
+
+echo "1/3 Baixando e instalando a imagem do Android com Play Store..."
+sudo waydroid init -s GAPPS -f || { echo "Falhou ao instalar a imagem."; exit 1; }
+sudo systemctl restart waydroid-container || true
+
+echo
+echo "2/3 Iniciando o Android (a primeira vez demora)..."
+waydroid session start >/dev/null 2>&1 &
+sleep 15
+waydroid show-full-ui >/dev/null 2>&1 &
+
+echo
+echo "3/3 Registro do aparelho no Google (obrigatório para entrar na Play Store)"
+echo "Quando o Android terminar de iniciar, aguarde 1 a 2 minutos e rode abaixo:"
+echo
+read -r -p "Pressione Enter para obter o ID do aparelho... " _
+sudo waydroid shell -- sh -c "sqlite3 /data/data/com.google.android.gsf/databases/gservices.db \"select * from main where name = 'android_id';\""
+echo
+echo "Copie o número depois de 'android_id|', abra a página que vai aparecer"
+echo "e cole lá. Depois reinicie o Android e entre na Play Store."
+xdg-open "https://www.google.com/android/uncertified" >/dev/null 2>&1 &
+echo
+read -r -p "Pressione Enter para fechar." _

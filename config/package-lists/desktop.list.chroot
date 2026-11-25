@@ -17,10 +17,10 @@ breeze-icon-theme
 xdg-desktop-portal-kde
 xdg-user-dirs
 
-# --- Navegador (base Chromium) ---
-chromium
-chromium-sandbox
-chromium-l10n
+# --- Navegador: o Google Chrome é instalado pelo hook do build ---
+wget
+ca-certificates
+fonts-liberation
 
 # --- Apps essenciais ---
 dolphin
@@ -60,6 +60,13 @@ firmware-realtek
 firmware-misc-nonfree
 amd64-microcode
 intel-microcode
+
+# --- Apps Android (Waydroid) ---
+waydroid
+lxc
+nftables
+dnsmasq-base
+sqlite3
 
 # --- Instalador gráfico (Calamares) ---
 calamares

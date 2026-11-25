@@ -3,6 +3,7 @@ LookAndFeelPackage=org.nexdesk.desktop
 SingleClick=false
 
 [General]
+AccentColor=122,124,240
 fixed=Noto Sans Mono,10,-1,5,50,0,0,0,0,0
 font=Inter,10,-1,5,50,0,0,0,0,0
 menuFont=Inter,10,-1,5,50,0,0,0,0,0

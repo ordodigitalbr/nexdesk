@@ -5,11 +5,23 @@ set -e
 
 [ -e /var/lib/live/config/nexdesk-autologin ] && exit 0
 
+# Sessão: Wayland em hardware real (necessário para o Waydroid/Android);
+# X11 dentro de máquinas virtuais, onde o Wayland costuma falhar.
+# Dá para forçar no menu de boot (tecla TAB): nexdesk.x11 ou nexdesk.wayland
+SESSION=plasma.desktop
+if systemd-detect-virt --vm --quiet 2>/dev/null; then
+	SESSION=plasmax11.desktop
+fi
+case " $(cat /proc/cmdline) " in
+	*" nexdesk.x11 "*) SESSION=plasmax11.desktop ;;
+	*" nexdesk.wayland "*) SESSION=plasma.desktop ;;
+esac
+
 mkdir -p /etc/sddm.conf.d
 cat > /etc/sddm.conf.d/10-nexdesk-live-autologin.conf <<EOF
 [Autologin]
 User=nexdesk
-Session=plasmax11.desktop
+Session=$SESSION
 EOF
 
 mkdir -p /var/lib/live/config

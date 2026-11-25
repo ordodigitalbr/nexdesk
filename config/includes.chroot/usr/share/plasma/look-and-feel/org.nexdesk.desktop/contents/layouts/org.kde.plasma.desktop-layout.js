@@ -1,43 +1,49 @@
-// Layout inicial do Plasma: barra de tarefas única na parte inferior,
-// com lançador em tela cheia à esquerda e bandeja + relógio à direita.
+// Layout inicial do Plasma, estilo "desktop mode":
+//  - dock flutuante, arredondado e centralizado (lançador + apps fixados/abertos)
+//  - bandeja do sistema + relógio em uma pílula flutuante à direita
 
-var panel = new Panel();
-panel.location = "bottom";
-panel.height = 2 * Math.floor(gridUnit * 3 / 2);
-panel.hiding = "none";
-panel.floating = false;
+function novoPainel(alinhamento) {
+    var p = new Panel();
+    p.location = "bottom";
+    p.height = 2 * Math.floor(gridUnit * 3.2 / 2);
+    p.hiding = "none";
+    p.floating = true;
+    p.lengthMode = "fit";
+    p.alignment = alinhamento;
+    return p;
+}
 
-// Lançador de apps em tela cheia (grade de apps)
-var launcher = panel.addWidget("org.kde.plasma.kickerdash");
+// ---------- Dock central ----------
+var dock = novoPainel("center");
+
+var launcher = dock.addWidget("org.kde.plasma.kickerdash");
 launcher.currentConfigGroup = ["General"];
 launcher.writeConfig("icon", "view-app-grid");
+launcher.writeConfig("useCustomButtonImage", true);
+launcher.writeConfig("customButtonImage", "view-app-grid");
 
-panel.addWidget("org.kde.plasma.marginsseparator");
+dock.addWidget("org.kde.plasma.marginsseparator");
 
-// Apps fixados + janelas abertas (somente ícones)
-var tasks = panel.addWidget("org.kde.plasma.icontasks");
+var tasks = dock.addWidget("org.kde.plasma.icontasks");
 tasks.currentConfigGroup = ["General"];
 tasks.writeConfig("launchers", [
-    "applications:chromium.desktop",
+    "applications:google-chrome.desktop",
     "applications:org.kde.dolphin.desktop",
     "applications:org.kde.konsole.desktop",
     "applications:org.kde.kate.desktop",
     "applications:systemsettings.desktop"
 ]);
 
-panel.addWidget("org.kde.plasma.marginsseparator");
+// ---------- Bandeja + relógio ----------
+var bandeja = novoPainel("right");
+bandeja.addWidget("org.kde.plasma.systemtray");
 
-// Lado direito: bandeja do sistema, relógio, mostrar área de trabalho
-panel.addWidget("org.kde.plasma.systemtray");
-
-var clock = panel.addWidget("org.kde.plasma.digitalclock");
+var clock = bandeja.addWidget("org.kde.plasma.digitalclock");
 clock.currentConfigGroup = ["Appearance"];
 clock.writeConfig("showDate", true);
 clock.writeConfig("dateFormat", "shortDate");
 
-panel.addWidget("org.kde.plasma.showdesktop");
-
-// Papel de parede
+// ---------- Papel de parede ----------
 var desktopsArray = desktopsForActivity(currentActivity());
 for (var i = 0; i < desktopsArray.length; i++) {
     var d = desktopsArray[i];
