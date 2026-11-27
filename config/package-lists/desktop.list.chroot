@@ -62,7 +62,7 @@ amd64-microcode
 intel-microcode
 
 # --- Apps Android (Waydroid) ---
-waydroid
+# O Android (Waydroid) é instalado pelo hook do build, a partir do backports.
 lxc
 nftables
 dnsmasq-base
